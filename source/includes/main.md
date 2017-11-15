@@ -6,11 +6,17 @@ We have language bindings in Shell, Ruby, and Python! You can view code examples
 
 This example API documentation page was created with [Slate](https://github.com/tripit/slate). Feel free to edit it and use it as a base for your own API's documentation.
 
+# Getting Started
+
+## Client Credential Setup
+
+## List of Available APIs
+
 # Authentication
 
 > To authorize, use this code:
 
-```ruby
+```c
 require 'kittn'
 
 api = Kittn::APIClient.authorize!('meowmeowmeow')
@@ -36,9 +42,17 @@ let api = kittn.authorize('meowmeowmeow');
 
 > Make sure to replace `meowmeowmeow` with your API key.
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
+Request Details
 
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
+URL: POST https://www.healthstream.com/STS/connect/token
+
+Header Param eters
+Authorization: Basic ZWNobzozd1hrJlZHRX1UblJnNTgm
+Content-Type: application/x-w w w -form-urlencoded
+
+Body
+grant_type: client_credentials
+scope: api
 
 `Authorization: meowmeowmeow`
 
@@ -46,7 +60,7 @@ Kittn expects for the API key to be included in all API requests to the server i
 You must replace <code>meowmeowmeow</code> with your personal API key.
 </aside>
 
-# Kittens
+# To Do API
 
 ## Get All Kittens
 

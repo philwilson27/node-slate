@@ -1,9 +1,7 @@
 title: API Reference
 
 language_tabs:
-  - bash
-  - ruby
-  - python
+  - c
   - javascript
 
 toc_footers:
