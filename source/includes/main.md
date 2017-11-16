@@ -12,26 +12,21 @@ This example API documentation page was created with [Slate](https://github.com/
 
 ## List of Available APIs
 
+### To Do API 1.1.0
+
 # Authentication
 
 > To authorize, use this code:
 
 ```c
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-```
-
-```bash
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
+private async Task GetTokenAsync()
+{
+var client = new TokenClient(
+"https://www.healthstream.com/STS/connect/token",
+"HealthStream Client ID", // This is your HealthStream STS Client id
+"HealthStream STS secret key"); // This is your HealthStream STS secret key
+return await client.RequestClientCredentialsAsync("api"); // "api" is the scope
+}
 ```
 
 ```javascript
@@ -40,21 +35,28 @@ const kittn = require('kittn');
 let api = kittn.authorize('meowmeowmeow');
 ```
 
-> Make sure to replace `meowmeowmeow` with your API key.
+```json
+{
+    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6ImowZmluQ1ppaUZjQlUybklLWDA3QmNSWHhQZyIsImtpZCI6ImowZmluQ1ppaUZjQlUybklLWDA3QmNSWHhQZyJ9.eyJjbGllbnRfaWQiOiJlY2hvIiwic2NvcGUiOiJhcGkiLCJpc3MiOiJodHRwOi8vd3d3LmhlYWx0aHN0cmVhbS5jb20vU1RTIiwiYXVkIjoiaHR0cDovL3d3dy5oZWFsdGhzdHJlYW0uY29tL1NUUy9yZXNvdXJjZXMiLCJleHAiOjE0OTcwMTQ5ODUsIm5iZiI6MTQ5NzAxNDkyNX0.jACCBuCPmPjy70ng85TLI38cBPhAhSka68JmiHQe2zivkifQbf86itWgpCI1oYSbLI0_71quqjvcSXmAFW9ViPiYpXfJRqMkqT9gUHsqCfbcWHq4C4TCjyJp6Ks0pQYUt4X-GTmfcqF43D75d_LP10s6a7opz8Xunwt85VpnGoqdoBelOUeRbXskybNEWGKr9_i0Btpq8vU2xzz6bAhfb2TIXgkv_twJ9PnV_y6oikUeIs8FlYWOcROarSjvuLxF0xCKlLEplfrm99bgmXpjDuz5Qp54dn2Hi59qtJ3EYNsRhmZA7nqBnxZ5cCsNUNsD6-MnlA3VsTAt80U9KYyUYg",
+    "expires_in": 60,
+    "token_type": "Bearer"
+}
+```
 
-Request Details
+> Note: You will need to install the IdentityModel NuGet package to create a TokenClient
+
+**Request Details**
 
 URL: POST https://www.healthstream.com/STS/connect/token
 
-Header Param eters
-Authorization: Basic ZWNobzozd1hrJlZHRX1UblJnNTgm
-Content-Type: application/x-w w w -form-urlencoded
+**Header Parameters**
+- Authorization: Basic ZWNobzozd1hrJlZHRX1UblJnNTgm
+- Content-Type: application/x-w w w -form-urlencoded
 
-Body
-grant_type: client_credentials
-scope: api
+**Body**
+- grant_type: client_credentials
+- scope: api
 
-`Authorization: meowmeowmeow`
 
 <aside class="notice">
 You must replace <code>meowmeowmeow</code> with your personal API key.
