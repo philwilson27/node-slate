@@ -1,8 +1,8 @@
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+Welcome to the HealthStream API Library. Here you can find all the information you're looking for from **To Do Items** to HLCData Items.
 
-We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+We have language bindings in C# and the JavaScript to call them. You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
 
 This example API documentation page was created with [Slate](https://github.com/tripit/slate). Feel free to edit it and use it as a base for your own API's documentation.
 
@@ -30,9 +30,7 @@ return await client.RequestClientCredentialsAsync("api"); // "api" is the scope
 ```
 
 ```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
+None
 ```
 
 ```json
@@ -59,65 +57,57 @@ URL: POST https://www.healthstream.com/STS/connect/token
 
 
 <aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
+You must put your token inside the header to access the API.
 </aside>
 
 # To Do API
 
-## Get All Kittens
+## GetAssignedLearningCount Endpoint
 
-```ruby
-require 'kittn'
+```c
+private async Task<string> GetAssignedLearning(Guid orgId, Guid userId)
+{
+       using (var client = new HttpClient())
+       {
+              client.BaseAddress = new Uri("https://www.healthstream.com/api/hs/ToDo/V1/");
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
+              // Get an authorization token. The generated token will expire every 60 second.
+              // You can utilize the same token across many request as long as it is not expired.
+              var token = (await GetTokenAsync()).AccessToken.Dump("The generated token");
 
-```python
-import kittn
+              // Adding the authorization header attribute.
+              client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
+              var resource = string.Format("api/GetAssignedLearningCount(userId={0},orgId={1})", userId, orgId);
 
-```bash
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
-```
+              var response = await client.GetAsync(resource);
 
-```javascript
-const kittn = require('kittn');
+              return response.StatusCode == HttpStatusCode.OK
+              ? JObject.Parse(await response.Content.ReadAsStringAsync())["value"].ToString()
+              : null;
+       }
+}
 
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
 ```
 
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
+{
+    "@odata.context": "http://www.healthstream.com/ToDo/V1/api/$metadata#Edm.Int32",
+    "value": 9
+}
 ```
 
-This endpoint retrieves all kittens.
+This endpoint returns the number of assigned learning items for a particular user in a particular org.
 
 ### HTTP Request
 
-`GET http://example.com/api/kittens`
+`GET https://www.healthstream.com/api/hs/ToDo/V1/api/GetAssignedLearningCount(userId=userId,orgId=orgId)`
+
+### Header Parameters
+
+- Authorization: *access_token received from the request made in Acquire Authorization Token*
 
 ### Query Parameters
 
